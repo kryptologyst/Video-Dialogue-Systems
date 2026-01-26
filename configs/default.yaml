@@ -1,0 +1,61 @@
+# Video Dialogue System Configuration
+
+# Model configuration
+model:
+  type: "simple"  # Options: "simple", "clip", "blip"
+  params:
+    vocab_size: 10000
+    hidden_dim: 256
+    num_layers: 3
+
+# Data configuration
+data:
+  train_data_path: "./data/video_dialogue_dataset.json"
+  val_data_path: "./data/video_dialogue_dataset.json"
+  test_data_path: "./data/video_dialogue_dataset.json"
+  video_dir: "./data/videos"
+  max_frames: 32
+  target_size: [224, 224]
+  batch_size: 8
+  num_workers: 4
+
+# Training configuration
+training:
+  num_epochs: 50
+  optimizer:
+    type: "adamw"
+    lr: 1e-4
+    weight_decay: 0.01
+  scheduler:
+    type: "cosine"
+    T_max: 50
+  grad_clip: 1.0
+  save_every: 10
+
+# Evaluation configuration
+evaluation:
+  metrics: ["exact_match", "f1_score", "bleu_1", "bleu_2", "meteor"]
+  save_predictions: true
+  output_dir: "./evaluation_results"
+
+# Device configuration
+device:
+  use_mixed_precision: true
+  find_optimal_batch_size: true
+
+# Logging configuration
+logging:
+  level: "INFO"
+  log_every: 100
+
+# Wandb configuration (optional)
+wandb:
+  enabled: false
+  project: "video-dialogue"
+  name: "experiment-1"
+
+# Random seed
+seed: 42
+
+# Output directory
+output_dir: "./outputs"
